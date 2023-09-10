@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useQuery } from "@apollo/client";
+import { GET_COUNTRIES } from "./queries/getCountries";
+import Loading from "./components/Loading";
 
 function App() {
+  const { loading, error, data } = useQuery(GET_COUNTRIES);
+
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const countries = data.countries;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        {countries.map((country: any) => (
+          <li key={country.code}>
+            {country.name} + {country.code}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
