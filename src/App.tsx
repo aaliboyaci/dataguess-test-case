@@ -4,11 +4,19 @@ import "./components/Loading.css";
 import "./App.css";
 import React, { useState } from "react";
 
+interface Country {
+  code: string;
+  name: string;
+  emoji: string;
+  capital: string;
+}
+
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  console.log(data);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
+  const [latestSelectedCountry, setLatestSelectedCountry] =
+    useState<Country | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -16,6 +24,35 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const handleCountryClick = (country: Country) => {
+    if (selectedCountries.some((c) => c === country)) {
+      if (latestSelectedCountry === country) {
+        selectedCountries.length === 1
+          ? setLatestSelectedCountry(null)
+          : setLatestSelectedCountry(
+              selectedCountries[selectedCountries.length - 2]
+            );
+      }
+      setSelectedCountries(selectedCountries.filter((c) => c !== country));
+    } else {
+      setSelectedCountries([...selectedCountries, country]);
+      setLatestSelectedCountry(country);
+    }
+  };
+
+  const getCountryStyle = (country: Country) => {
+    if (
+      selectedCountries.some((c) => c === country) &&
+      latestSelectedCountry !== country
+    ) {
+      return "selected-country-item";
+    } else if (latestSelectedCountry === country) {
+      return "latest-selected-country-item";
+    } else {
+      return "country-item";
+    }
   };
 
   if (loading)
@@ -26,7 +63,7 @@ function App() {
     );
   if (error) return <p>Error: {error.message}</p>;
 
-  const countries = data.countries;
+  const countries: Country[] = data.countries;
 
   return (
     <div className="app-container">
@@ -43,10 +80,13 @@ function App() {
       </div>
       <div className="country-list">
         <ul>
-          {countries.map((country: any) => (
-            <li key={country.code} className="country-item">
+          {countries.map((country) => (
+            <li
+              key={country.code}
+              onClick={() => handleCountryClick(country)}
+              className={getCountryStyle(country)}
+            >
               <div className="country-emoji">{country.emoji}</div>
-
               <div className="country-info">
                 <div className="country-name">
                   {country.name.substring(0, 30)}
