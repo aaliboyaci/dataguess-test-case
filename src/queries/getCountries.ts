@@ -7,6 +7,7 @@ export const GET_COUNTRIES = gql`
       emoji
       currency
       code
+      capital
     }
   }
 `;
