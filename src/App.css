@@ -96,7 +96,6 @@
 }
 
 .goto-top-button {
-  margin-top: 10px;
   border-radius: 7px;
   border-color: #212A3E;
   border-style: solid;
@@ -112,12 +111,10 @@
   color: #212A3E;
   width: 100px;
   margin: 20px 0 40px 0;
-  /* 
-  position: fixed;
-
-  z-index: 1; */
 
 }
+
+
 
 .goto-top-button:hover {
   background-color: #193e8e;

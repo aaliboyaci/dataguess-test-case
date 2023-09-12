@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { Country } from "./Types/CountryInterface";
 import GroupedCountry from "./group-by-components/GroupedCountry";
 import GroupByButtons from "./components/GroupByButtons";
+import SelectionButtons from "./components/SelectionButtons";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -115,39 +117,19 @@ function App() {
       </div>
 
       <div className="country-list">
-        <div className="top-buttons">
-          <button
-            className="remove-button"
-            onClick={() => {
-              setSelectedCountries([]);
-              setLatestSelectedCountry(null);
-              setShowSelections(false);
-              setSearchTerm("");
-              setGroup(0);
-            }}
-          >
-            Clear Selections ({selectedCountries.length})
-          </button>
-          <button
-            className={
-              selectedCountries.length !== 0
-                ? "show-selections-button"
-                : "show-selections-button-disable"
-            }
-            onClick={() => {
-              if (selectedCountries.length !== 0) {
-                setShowSelections(!showSelections);
-                setGroup(showSelections ? 0 : 4);
-              } else {
-                setShowSelections(false);
-                setGroup(4);
-              }
-            }}
-          >
-            {showSelections ? "Close" : "Show"} Selections (
-            {selectedCountries.length})
-          </button>
-        </div>
+        <SelectionButtons
+          selectedCountries={selectedCountries}
+          showSelections={showSelections}
+          setShowSelections={setShowSelections}
+          setGroup={setGroup}
+          clearSelections={() => {
+            setSelectedCountries([]);
+            setLatestSelectedCountry(null);
+            setShowSelections(false);
+            setSearchTerm("");
+            setGroup(0);
+          }}
+        />
 
         <GroupedCountry
           group={group}
@@ -160,15 +142,7 @@ function App() {
           showSelections={showSelections}
         />
       </div>
-      {filteredCountries.length >= 10 ||
-        (data.countries.length >= 10 && (
-          <button
-            className="goto-top-button"
-            onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
-          >
-            Go to top
-          </button>
-        ))}
+      <ScrollToTopButton />
     </div>
   );
 }
