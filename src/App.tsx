@@ -187,14 +187,15 @@ function App() {
           )
         )}
       </div>
-      {filteredCountries.length >= 10 && (
-        <button
-          className="goto-top-button"
-          onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
-        >
-          Go to top
-        </button>
-      )}
+      {filteredCountries.length >= 10 ||
+        (data.countries.length >= 10 && (
+          <button
+            className="goto-top-button"
+            onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
+          >
+            Go to top
+          </button>
+        ))}
     </div>
   );
 }
