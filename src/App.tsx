@@ -146,10 +146,10 @@ function App() {
             onClick={() => {
               if (selectedCountries.length !== 0) {
                 setShowSelections(showSelections ? false : true);
-                setGroup(0);
+                setGroup(4);
               } else {
                 setShowSelections(false);
-                setGroup(0);
+                setGroup(4);
               }
             }}
           >
@@ -166,6 +166,7 @@ function App() {
           searchTerm={searchTerm}
           handleCountryClick={handleCountryClick}
           getCountryStyle={getCountryStyle}
+          showSelections={showSelections}
         />
       </div>
       {filteredCountries.length >= 10 ||

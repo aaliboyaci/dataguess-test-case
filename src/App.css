@@ -112,6 +112,11 @@
   color: #212A3E;
   width: 100px;
   margin: 20px 0 40px 0;
+  /* 
+  position: fixed;
+
+  z-index: 1; */
+
 }
 
 .goto-top-button:hover {

@@ -4,6 +4,7 @@ import CountryList from "../components/CountryList";
 import LanguageGroup from "./LanguageGroup";
 import CurrencyGroup from "./CurrencyGroup";
 import ContinentGroup from "./ContinentGroup";
+import SelectedCountryList from "../components/SelectedList";
 
 interface GroupedCountryProps {
   group: number;
@@ -13,6 +14,7 @@ interface GroupedCountryProps {
   searchTerm: string;
   handleCountryClick: (country: Country) => void;
   getCountryStyle: (country: Country) => string;
+  showSelections: boolean;
 }
 
 function renderCountryList(
@@ -43,6 +45,19 @@ function renderLanguageGroup(
   );
 }
 
+function renderSelectedCountryList(
+  selectedCountries: Country[],
+  handleCountryClick: (country: Country) => void,
+  getCountryStyle: (country: Country) => string
+) {
+  return (
+    <SelectedCountryList
+      selectedCountries={selectedCountries}
+      handleCountryClick={handleCountryClick}
+      getCountryStyle={getCountryStyle}
+    />
+  );
+}
 function renderCurrencyGroup(
   countries: Country[],
   handleCountryClick: (country: Country) => void,
@@ -77,6 +92,7 @@ function GroupedCountry({
   selectedCountries,
   filteredCountries,
   searchTerm,
+  showSelections,
   handleCountryClick,
   getCountryStyle,
 }: GroupedCountryProps) {
@@ -113,6 +129,15 @@ function GroupedCountry({
         handleCountryClick,
         getCountryStyle
       );
+      break;
+    case 4:
+      content =
+        showSelections &&
+        renderSelectedCountryList(
+          selectedCountries,
+          handleCountryClick,
+          getCountryStyle
+        );
       break;
     default:
       content = null;
