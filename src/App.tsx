@@ -3,6 +3,9 @@ import { GET_COUNTRIES } from "./queries/getCountries";
 import "./components/Loading.css";
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import CountryList from "./components/CountryList";
+import FilteredCountryList from "./components/FilteredCountryList";
+import SelectedCountryList from "./components/SelectedList";
 
 interface Country {
   code: string;
@@ -18,6 +21,7 @@ function App() {
   const [latestSelectedCountry, setLatestSelectedCountry] =
     useState<Country | null>(null);
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
+  const [showSelections, setShowSelections] = useState<boolean>(false);
 
   useEffect(() => {
     if (data && data.countries && data.countries.length >= 10) {
@@ -44,10 +48,10 @@ function App() {
       setFilteredCountries(filtered);
     }
   }, [data, searchTerm]);
-  console.log(filteredCountries[filteredCountries.length - 1]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setShowSelections(false);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,56 +114,52 @@ function App() {
       </div>
 
       <div className="country-list">
-        <button
-          className="remove-button"
-          onClick={() => {
-            setSelectedCountries([]);
-            setLatestSelectedCountry(null);
-          }}
-        >
-          Clear Selections ({selectedCountries.length})
-        </button>
-        <ul>
-          {searchTerm === "" &&
-            countries.map((country) => (
-              <li
-                key={country.code}
-                onClick={() => handleCountryClick(country)}
-                className={getCountryStyle(country)}
-              >
-                <div className="country-emoji">{country.emoji}</div>
-                <div className="country-info">
-                  <div className="country-name">
-                    {country.name.substring(0, 30)}
-                    {country.name.length > 30 && <>...</>}
-                  </div>
-                  <div className="country-capital">
-                    {country.code} {country.capital}
-                  </div>
-                </div>
-              </li>
-            ))}
-
-          {searchTerm !== "" &&
-            filteredCountries.map((country) => (
-              <li
-                key={country.code}
-                onClick={() => handleCountryClick(country)}
-                className={getCountryStyle(country)}
-              >
-                <div className="country-emoji">{country.emoji}</div>
-                <div className="country-info">
-                  <div className="country-name">
-                    {country.name.substring(0, 30)}
-                    {country.name.length > 30 && <>...</>}
-                  </div>
-                  <div className="country-capital">
-                    {country.code} {country.capital}
-                  </div>
-                </div>
-              </li>
-            ))}
-        </ul>
+        <div className="top-buttons">
+          <button
+            className="remove-button"
+            onClick={() => {
+              setSelectedCountries([]);
+              setLatestSelectedCountry(null);
+              setShowSelections(false);
+            }}
+          >
+            Clear Selections ({selectedCountries.length})
+          </button>
+          <button
+            className={
+              selectedCountries.length !== 0
+                ? "show-selections-button"
+                : "show-selections-button-disable"
+            }
+            onClick={() => {
+              selectedCountries.length !== 0 && showSelections
+                ? setShowSelections(false)
+                : setShowSelections(true);
+            }}
+          >
+            {showSelections ? "Close" : "Show"} Selections (
+            {selectedCountries.length})
+          </button>
+        </div>
+        {showSelections ? (
+          <SelectedCountryList
+            selectedCountries={selectedCountries}
+            handleCountryClick={handleCountryClick}
+            getCountryStyle={getCountryStyle}
+          />
+        ) : searchTerm === "" ? (
+          <CountryList
+            countries={countries}
+            handleCountryClick={handleCountryClick}
+            getCountryStyle={getCountryStyle}
+          />
+        ) : (
+          <FilteredCountryList
+            filteredCountries={filteredCountries}
+            handleCountryClick={handleCountryClick}
+            getCountryStyle={getCountryStyle}
+          />
+        )}
       </div>
       {filteredCountries.length >= 10 && (
         <button

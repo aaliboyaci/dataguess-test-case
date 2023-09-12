@@ -22,6 +22,14 @@
   background-color: #fcfeff;
 }
 
+.top-buttons {
+
+  display: flex;
+  gap: 10px;
+  width: 320px;
+
+}
+
 .remove-button {
   margin-top: 10px;
   border-radius: 7px;
@@ -44,6 +52,48 @@
   background-color: #c61414;
   border-color: #c61414;
   color: #f5dfdf;
+}
+
+.show-selections-button {
+  margin-top: 10px;
+  border-radius: 7px;
+  border-color: #212A3E;
+  border-style: solid;
+  background-color: #dfebf5;
+  border-width: 1px;
+  padding: 7px 0 7px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  color: #212A3E;
+  width: 100%;
+}
+
+.show-selections-button-disable {
+  margin-top: 10px;
+  border-radius: 7px;
+  border-color: #979797;
+  border-style: solid;
+  background-color: #e4e4e4;
+  border-width: 1px;
+  padding: 7px 0 7px 0;
+  cursor: not-allowed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  color: #979797;
+  width: 100%;
+}
+
+.show-selections-button:hover {
+  background-color: #193e8e;
+  border-color: #193e8e;
+  color: #dfebf5;
 }
 
 .goto-top-button {
