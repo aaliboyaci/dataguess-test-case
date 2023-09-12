@@ -27,7 +27,7 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    if (filteredCountries && searchTerm !== "") {
+    if (filteredCountries.length !== 0 && searchTerm !== "") {
       setSelectedCountries([
         ...selectedCountries,
         filteredCountries[filteredCountries.length - 1],
@@ -37,13 +37,14 @@ function App() {
   }, [filteredCountries]);
 
   useEffect(() => {
-    if (data && data.countries) {
+    if (data && data.countries && searchTerm !== "") {
       const filtered = data.countries.filter((country: Country) =>
         country.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCountries(filtered);
     }
   }, [data, searchTerm]);
+  console.log(filteredCountries[filteredCountries.length - 1]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);

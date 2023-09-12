@@ -9,7 +9,7 @@
 .text-filter {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .search-input {
@@ -161,4 +161,5 @@
 
 .header-title {
   color: #212A3E;
+  margin: 30px 0 0 0;
 }
