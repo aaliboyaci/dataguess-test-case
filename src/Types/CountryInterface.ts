@@ -4,5 +4,6 @@ export interface Country {
   currency: string;
   code: string;
   capital: string;
+  continent?: { name: string } | null;
   languages: { name: string }[];
 }

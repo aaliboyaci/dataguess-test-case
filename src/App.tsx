@@ -3,11 +3,8 @@ import { GET_COUNTRIES } from "./queries/getCountries";
 import "./components/Loading.css";
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import CountryList from "./components/CountryList";
-import FilteredCountryList from "./components/FilteredCountryList";
-import SelectedCountryList from "./components/SelectedList";
-import LanguageGroup from "./group-by-components/LanguageGroup";
 import { Country } from "./Types/CountryInterface";
+import GroupedCountry from "./group-by-components/GroupedCountry";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -116,8 +113,12 @@ function App() {
           <button className="group-button" onClick={() => setGroup(1)}>
             Language
           </button>
-          <button className="group-button"> Currency</button>
-          <button className="group-button"> Continent</button>
+          <button className="group-button" onClick={() => setGroup(2)}>
+            Currency
+          </button>
+          <button className="group-button" onClick={() => setGroup(3)}>
+            Continent
+          </button>
         </div>
         <hr className="line-middle"></hr>
       </div>
@@ -157,35 +158,15 @@ function App() {
           </button>
         </div>
 
-        {group === 0 ? (
-          showSelections ? (
-            <SelectedCountryList
-              selectedCountries={selectedCountries}
-              handleCountryClick={handleCountryClick}
-              getCountryStyle={getCountryStyle}
-            />
-          ) : searchTerm === "" ? (
-            <CountryList
-              countries={countries}
-              handleCountryClick={handleCountryClick}
-              getCountryStyle={getCountryStyle}
-            />
-          ) : (
-            <FilteredCountryList
-              filteredCountries={filteredCountries}
-              handleCountryClick={handleCountryClick}
-              getCountryStyle={getCountryStyle}
-            />
-          )
-        ) : (
-          group === 1 && (
-            <LanguageGroup
-              countries={countries}
-              handleCountryClick={handleCountryClick}
-              getCountryStyle={getCountryStyle}
-            />
-          )
-        )}
+        <GroupedCountry
+          group={group}
+          countries={countries}
+          selectedCountries={selectedCountries}
+          filteredCountries={filteredCountries}
+          searchTerm={searchTerm}
+          handleCountryClick={handleCountryClick}
+          getCountryStyle={getCountryStyle}
+        />
       </div>
       {filteredCountries.length >= 10 ||
         (data.countries.length >= 10 && (
