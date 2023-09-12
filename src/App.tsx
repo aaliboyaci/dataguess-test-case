@@ -27,14 +27,14 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    if (data && data.countries) {
+    if (filteredCountries && searchTerm !== "") {
       setSelectedCountries([
         ...selectedCountries,
         filteredCountries[filteredCountries.length - 1],
       ]);
       setLatestSelectedCountry(filteredCountries[filteredCountries.length - 1]);
     }
-  }, [filteredCountries, data]);
+  }, [filteredCountries]);
 
   useEffect(() => {
     if (data && data.countries) {
@@ -116,7 +116,7 @@ function App() {
             setLatestSelectedCountry(null);
           }}
         >
-          Clear Selections
+          Clear Selections ({selectedCountries.length})
         </button>
         <ul>
           {searchTerm === "" &&
