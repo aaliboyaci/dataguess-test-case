@@ -32,11 +32,11 @@ function App() {
 
   useEffect(() => {
     if (filteredCountries.length !== 0 && searchTerm !== "") {
-      setSelectedCountries([
-        ...selectedCountries,
-        filteredCountries[filteredCountries.length - 1],
-      ]);
-      setLatestSelectedCountry(filteredCountries[filteredCountries.length - 1]);
+      const newCountry = filteredCountries[filteredCountries.length - 1];
+      if (!selectedCountries.some((c) => c.code === newCountry.code)) {
+        setSelectedCountries([...selectedCountries, newCountry]);
+        setLatestSelectedCountry(newCountry);
+      }
     }
   }, [filteredCountries]);
 
@@ -121,6 +121,7 @@ function App() {
               setSelectedCountries([]);
               setLatestSelectedCountry(null);
               setShowSelections(false);
+              setSearchTerm("");
             }}
           >
             Clear Selections ({selectedCountries.length})
@@ -132,9 +133,11 @@ function App() {
                 : "show-selections-button-disable"
             }
             onClick={() => {
-              selectedCountries.length !== 0 && showSelections
-                ? setShowSelections(false)
-                : setShowSelections(true);
+              selectedCountries.length !== 0
+                ? showSelections
+                  ? setShowSelections(false)
+                  : setShowSelections(true)
+                : setShowSelections(false);
             }}
           >
             {showSelections ? "Close" : "Show"} Selections (
