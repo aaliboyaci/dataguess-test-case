@@ -5,6 +5,7 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Country } from "./Types/CountryInterface";
 import GroupedCountry from "./group-by-components/GroupedCountry";
+import GroupByButtons from "./components/GroupByButtons";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -106,20 +107,10 @@ function App() {
           />
         </form>
         <p className="small-title">Group By</p>
-        <div className="top-buttons">
-          <button className="group-button" onClick={() => setGroup(0)}>
-            All
-          </button>
-          <button className="group-button" onClick={() => setGroup(1)}>
-            Language
-          </button>
-          <button className="group-button" onClick={() => setGroup(2)}>
-            Currency
-          </button>
-          <button className="group-button" onClick={() => setGroup(3)}>
-            Continent
-          </button>
-        </div>
+        <GroupByButtons
+          setGroup={setGroup}
+          setShowSelections={setShowSelections}
+        />
         <hr className="line-middle"></hr>
       </div>
 
@@ -145,8 +136,8 @@ function App() {
             }
             onClick={() => {
               if (selectedCountries.length !== 0) {
-                setShowSelections(showSelections ? false : true);
-                setGroup(4);
+                setShowSelections(!showSelections);
+                setGroup(showSelections ? 0 : 4);
               } else {
                 setShowSelections(false);
                 setGroup(4);
