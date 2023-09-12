@@ -1,8 +1,8 @@
 export interface Country {
-  code: string;
-  emoji: string;
   name: string;
-  language?: string;
-  capital?: string;
-  currency?: string;
+  emoji: string;
+  currency: string;
+  code: string;
+  capital: string;
+  languages: { name: string }[];
 }

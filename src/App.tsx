@@ -48,6 +48,7 @@ function App() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setShowSelections(false);
+    setGroup(0);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,7 +97,7 @@ function App() {
   return (
     <div className="app-container">
       <h1 className="header-title">Dataguess</h1>
-      <h3 className="header-tite">Jr Frontend Developer Assignment</h3>
+      <h3 className="header-title">Jr Frontend Developer Assignment</h3>
       <div className="text-filter">
         <form className="search-form" onSubmit={handleSubmit}>
           <input
@@ -107,6 +108,12 @@ function App() {
             placeholder="Search for a country"
           />
         </form>
+        <div className="top-buttons">
+          <p>Group By</p>
+          <button onClick={() => setGroup(1)}> Language</button>
+          <button> Currency</button>
+          <button> Continent</button>
+        </div>
       </div>
 
       <div className="country-list">
@@ -129,11 +136,13 @@ function App() {
                 : "show-selections-button-disable"
             }
             onClick={() => {
-              selectedCountries.length !== 0
-                ? showSelections
-                  ? setShowSelections(false)
-                  : setShowSelections(true)
-                : setShowSelections(false);
+              if (selectedCountries.length !== 0) {
+                setShowSelections(showSelections ? false : true);
+                setGroup(0);
+              } else {
+                setShowSelections(false);
+                setGroup(0);
+              }
             }}
           >
             {showSelections ? "Close" : "Show"} Selections (

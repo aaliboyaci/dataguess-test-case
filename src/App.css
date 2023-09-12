@@ -123,6 +123,7 @@
 
 .country-list {
   margin-top: 30px;
+  margin-bottom: 30px;
   flex-direction: column;
   user-select: none;
 }
@@ -181,6 +182,10 @@
 
 .country-emoji {
   font-size: 27px;
+}
+
+.country-group-emoji {
+  font-size: 15px;
 }
 
 .country-info {
