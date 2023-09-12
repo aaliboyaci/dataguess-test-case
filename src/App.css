@@ -13,8 +13,8 @@
 }
 
 .search-input {
-  width: 310px;
-  padding: 10px;
+  width: 300px;
+  padding: 13px;
   border-radius: 7px;
   border-style: solid;
   border-color: #212A3E;
@@ -104,8 +104,12 @@
 }
 
 .loading-container {
-  margin-top: 200px;
+  margin-top: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.header-title {
+  color: #212A3E;
 }

@@ -84,8 +84,8 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>Dataguess</h1>
-      <h3>Jr Frontend Developer Assignment</h3>
+      <h1 className="header-title">Dataguess</h1>
+      <h3 className="header-tite">Jr Frontend Developer Assignment</h3>
       <div className="text-filter">
         <form className="search-form" onSubmit={handleSubmit}>
           <input
