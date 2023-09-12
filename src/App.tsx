@@ -6,13 +6,8 @@ import React, { useEffect, useState } from "react";
 import CountryList from "./components/CountryList";
 import FilteredCountryList from "./components/FilteredCountryList";
 import SelectedCountryList from "./components/SelectedList";
-
-interface Country {
-  code: string;
-  name: string;
-  emoji: string;
-  capital: string;
-}
+import LanguageGroup from "./group-by-components/LanguageGroup";
+import { Country } from "./Types/CountryInterface";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -22,6 +17,7 @@ function App() {
     useState<Country | null>(null);
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
   const [showSelections, setShowSelections] = useState<boolean>(false);
+  const [group, setGroup] = useState<number>(0);
 
   useEffect(() => {
     if (data && data.countries && data.countries.length >= 10) {
@@ -144,24 +140,35 @@ function App() {
             {selectedCountries.length})
           </button>
         </div>
-        {showSelections ? (
-          <SelectedCountryList
-            selectedCountries={selectedCountries}
-            handleCountryClick={handleCountryClick}
-            getCountryStyle={getCountryStyle}
-          />
-        ) : searchTerm === "" ? (
-          <CountryList
-            countries={countries}
-            handleCountryClick={handleCountryClick}
-            getCountryStyle={getCountryStyle}
-          />
+
+        {group === 0 ? (
+          showSelections ? (
+            <SelectedCountryList
+              selectedCountries={selectedCountries}
+              handleCountryClick={handleCountryClick}
+              getCountryStyle={getCountryStyle}
+            />
+          ) : searchTerm === "" ? (
+            <CountryList
+              countries={countries}
+              handleCountryClick={handleCountryClick}
+              getCountryStyle={getCountryStyle}
+            />
+          ) : (
+            <FilteredCountryList
+              filteredCountries={filteredCountries}
+              handleCountryClick={handleCountryClick}
+              getCountryStyle={getCountryStyle}
+            />
+          )
         ) : (
-          <FilteredCountryList
-            filteredCountries={filteredCountries}
-            handleCountryClick={handleCountryClick}
-            getCountryStyle={getCountryStyle}
-          />
+          group === 1 && (
+            <LanguageGroup
+              countries={countries}
+              handleCountryClick={handleCountryClick}
+              getCountryStyle={getCountryStyle}
+            />
+          )
         )}
       </div>
       {filteredCountries.length >= 10 && (

@@ -8,6 +8,9 @@ export const GET_COUNTRIES = gql`
       currency
       code
       capital
+      languages {
+        name
+      }
     }
   }
 `;

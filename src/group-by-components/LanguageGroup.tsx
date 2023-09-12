@@ -1,19 +1,19 @@
 import { Country } from "../Types/CountryInterface";
 
-interface FilteredCountryListProps {
-  filteredCountries: Country[];
+interface LanguageGroupProps {
+  countries: Country[];
   handleCountryClick: (country: Country) => void;
   getCountryStyle: (country: Country) => string;
 }
 
-function FilteredCountryList({
-  filteredCountries,
+function LanguageGroup({
+  countries,
   handleCountryClick,
   getCountryStyle,
-}: FilteredCountryListProps) {
+}: LanguageGroupProps) {
   return (
     <ul>
-      {filteredCountries.map((country) => (
+      {countries.map((country) => (
         <li
           key={country.code}
           onClick={() => handleCountryClick(country)}
@@ -25,9 +25,7 @@ function FilteredCountryList({
               {country.name.substring(0, 30)}
               {country.name.length > 30 && <>...</>}
             </div>
-            <div className="country-capital">
-              {country.code} {country.capital}
-            </div>
+            <div className="country-capital">{country.language}</div>
           </div>
         </li>
       ))}
@@ -35,4 +33,4 @@ function FilteredCountryList({
   );
 }
 
-export default FilteredCountryList;
+export default LanguageGroup;

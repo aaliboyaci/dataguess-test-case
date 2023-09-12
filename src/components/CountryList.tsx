@@ -1,11 +1,4 @@
-import React from "react";
-
-interface Country {
-  code: string;
-  emoji: string;
-  name: string;
-  capital: string;
-}
+import { Country } from "../Types/CountryInterface";
 
 interface CountryListProps {
   countries: Country[];
