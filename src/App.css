@@ -13,7 +13,7 @@
 }
 
 .search-input {
-  width: 280px;
+  width: 310px;
   padding: 10px;
   border-radius: 7px;
   border-style: solid;
@@ -40,7 +40,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  color: #212A3E
+  color: #212A3E;
+  width: 310px;
 }
 
 .selected-country-item {
@@ -57,6 +58,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  width: 310px;
+
 }
 
 .latest-selected-country-item {
@@ -73,6 +76,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  width: 310px;
+
 }
 
 .country-emoji {

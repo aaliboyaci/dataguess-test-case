@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { GET_COUNTRIES } from "./queries/getCountries";
 import "./components/Loading.css";
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Country {
   code: string;
@@ -17,6 +17,23 @@ function App() {
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [latestSelectedCountry, setLatestSelectedCountry] =
     useState<Country | null>(null);
+  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
+
+  useEffect(() => {
+    if (data && data.countries && data.countries.length >= 10) {
+      setSelectedCountries([data.countries[9]]);
+      setLatestSelectedCountry(data.countries[9]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data && data.countries) {
+      const filtered = data.countries.filter((country: Country) =>
+        country.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCountries(filtered);
+    }
+  }, [data, searchTerm]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -82,7 +99,27 @@ function App() {
       </div>
       <div className="country-list">
         <ul>
-          {countries.map((country) => (
+          {searchTerm === "" &&
+            countries.map((country) => (
+              <li
+                key={country.code}
+                onClick={() => handleCountryClick(country)}
+                className={getCountryStyle(country)}
+              >
+                <div className="country-emoji">{country.emoji}</div>
+                <div className="country-info">
+                  <div className="country-name">
+                    {country.name.substring(0, 30)}
+                    {country.name.length > 30 && <>...</>}
+                  </div>
+                  <div className="country-capital">
+                    {country.code} {country.capital}
+                  </div>
+                </div>
+              </li>
+            ))}
+
+          {filteredCountries.map((country) => (
             <li
               key={country.code}
               onClick={() => handleCountryClick(country)}
@@ -94,7 +131,9 @@ function App() {
                   {country.name.substring(0, 30)}
                   {country.name.length > 30 && <>...</>}
                 </div>
-                <div className="country-capital">{country.capital}</div>
+                <div className="country-capital">
+                  {country.code} {country.capital}
+                </div>
               </div>
             </li>
           ))}
