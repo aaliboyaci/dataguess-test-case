@@ -1,46 +1,67 @@
-# Getting Started with Create React App
+# Junior Frontend Developer Assignment Project Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+_GraphQL API Integration and Data Filtering_
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+This documentation provides an overview of the project "dataguess-test-case," which involved developing a web application with GraphQL API integration and data filtering capabilities. This project was completed as part of a given assignment.
 
-### `npm start`
+## Project Details
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Project Name**: dataguess-test-case **Project Version**: 0.1.0
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Dependencies
 
-### `npm test`
+**@apollo/client**: `3.8.3`
+**@testing-library/jest-dom**: `5.17.0`
+**@testing-library/react**: `13.4.0`
+**@testing-library/user-event**: `13.5.0`
+**@types/jest**: `27.5.2`
+**@types/node**: `16.18.50`
+**@types/react**: `18.2.21`
+**@types/react-dom**: `18.2.7`
+**graphql**: `16.8.0`
+**react**: `18.2.0`
+**react-dom**: `18.2.0`
+**react-scripts**: `5.0.1`
+**typescript**: `4.9.5`
+**web-vitals**: `2.1.4`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Overview
 
-### `npm run build`
+This project aimed to achieve the following tasks:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Data Retrieval via GraphQL API
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The project utilized the Apollo Client and GraphQL to fetch data from the [Countries GraphQL API](https://studio.apollographql.com/public/countries/home?variant=current).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Displaying Data in a List
 
-### `npm run eject`
+The retrieved data was displayed in a list format, with each item representing the country and its own infos.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 3. Implementing a Text Filter
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A text filter was added above the list, enabling users to search and group results based on user-defined criteria.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 4. Selectable Items
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Each list item was made selectable, allowing users to click to select and deselect items.
 
-## Learn More
+### 5. Background Color for Selected Items
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Selected items had a distinct background color from unselected items, with colors chosen from a predefined set.
+Not selected items > #F1F6F9
+Latest selected item > #193E8E
+Selected item(s) > #212A3E
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 6. Automatic Selection
+
+After loading items and applying group filters, the project automatically selected the 10th item or the last item if there were fewer than 10, considering performance for potentially long lists.
+
+## Assumptions and Notes
+
+- In cases where certain query fields were missing or non-functional in the provided API, these queries and filtering operations were implemented on the client-side.
+
+## Conclusion
+
+This project completed the assigned tasks, demonstrating the integration of a GraphQL API, data filtering capabilities, and user-friendly interactions as specified in the assignment. The technologies used, dependencies, and key functionalities have been documented above for reference.
