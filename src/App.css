@@ -22,6 +22,55 @@
   background-color: #fcfeff;
 }
 
+.remove-button {
+  margin-top: 10px;
+  border-radius: 7px;
+  border-color: #8b0d0d;
+  border-style: solid;
+  background-color: #f5dfdf;
+  border-width: 1px;
+  padding: 7px 0 7px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  color: #8b0d0d;
+  width: 100%;
+}
+
+.remove-button:hover {
+  background-color: #c61414;
+  border-color: #c61414;
+  color: #f5dfdf;
+}
+
+.goto-top-button {
+  margin-top: 10px;
+  border-radius: 7px;
+  border-color: #212A3E;
+  border-style: solid;
+  background-color: #F1F6F9;
+  border-width: 1px;
+  padding: 7px 0 7px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  color: #212A3E;
+  width: 100px;
+  margin: 20px 0 40px 0;
+}
+
+.goto-top-button:hover {
+  background-color: #193e8e;
+  border-color: #193e8e;
+  color: #F1F6F9;
+}
+
 .country-list {
   margin-top: 30px;
   flex-direction: column;

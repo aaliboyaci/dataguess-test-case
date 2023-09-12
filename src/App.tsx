@@ -28,6 +28,16 @@ function App() {
 
   useEffect(() => {
     if (data && data.countries) {
+      setSelectedCountries([
+        ...selectedCountries,
+        filteredCountries[filteredCountries.length - 1],
+      ]);
+      setLatestSelectedCountry(filteredCountries[filteredCountries.length - 1]);
+    }
+  }, [filteredCountries, data]);
+
+  useEffect(() => {
+    if (data && data.countries) {
       const filtered = data.countries.filter((country: Country) =>
         country.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -97,7 +107,17 @@ function App() {
           />
         </form>
       </div>
+
       <div className="country-list">
+        <button
+          className="remove-button"
+          onClick={() => {
+            setSelectedCountries([]);
+            setLatestSelectedCountry(null);
+          }}
+        >
+          Clear Selections
+        </button>
         <ul>
           {searchTerm === "" &&
             countries.map((country) => (
@@ -119,26 +139,35 @@ function App() {
               </li>
             ))}
 
-          {filteredCountries.map((country) => (
-            <li
-              key={country.code}
-              onClick={() => handleCountryClick(country)}
-              className={getCountryStyle(country)}
-            >
-              <div className="country-emoji">{country.emoji}</div>
-              <div className="country-info">
-                <div className="country-name">
-                  {country.name.substring(0, 30)}
-                  {country.name.length > 30 && <>...</>}
+          {searchTerm !== "" &&
+            filteredCountries.map((country) => (
+              <li
+                key={country.code}
+                onClick={() => handleCountryClick(country)}
+                className={getCountryStyle(country)}
+              >
+                <div className="country-emoji">{country.emoji}</div>
+                <div className="country-info">
+                  <div className="country-name">
+                    {country.name.substring(0, 30)}
+                    {country.name.length > 30 && <>...</>}
+                  </div>
+                  <div className="country-capital">
+                    {country.code} {country.capital}
+                  </div>
                 </div>
-                <div className="country-capital">
-                  {country.code} {country.capital}
-                </div>
-              </div>
-            </li>
-          ))}
+              </li>
+            ))}
         </ul>
       </div>
+      {filteredCountries.length >= 10 && (
+        <button
+          className="goto-top-button"
+          onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
+        >
+          Go to top
+        </button>
+      )}
     </div>
   );
 }
