@@ -108,12 +108,18 @@ function App() {
             placeholder="Search for a country"
           />
         </form>
+        <p className="small-title">Group By</p>
         <div className="top-buttons">
-          <p>Group By</p>
-          <button onClick={() => setGroup(1)}> Language</button>
-          <button> Currency</button>
-          <button> Continent</button>
+          <button className="group-button" onClick={() => setGroup(0)}>
+            All
+          </button>
+          <button className="group-button" onClick={() => setGroup(1)}>
+            Language
+          </button>
+          <button className="group-button"> Currency</button>
+          <button className="group-button"> Continent</button>
         </div>
+        <hr className="line-middle"></hr>
       </div>
 
       <div className="country-list">
@@ -125,6 +131,7 @@ function App() {
               setLatestSelectedCountry(null);
               setShowSelections(false);
               setSearchTerm("");
+              setGroup(0);
             }}
           >
             Clear Selections ({selectedCountries.length})

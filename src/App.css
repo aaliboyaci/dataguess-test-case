@@ -23,11 +23,10 @@
 }
 
 .top-buttons {
-
   display: flex;
+  align-items: center;
   gap: 10px;
   width: 320px;
-
 }
 
 .remove-button {
@@ -122,7 +121,7 @@
 }
 
 .country-list {
-  margin-top: 30px;
+  margin-top: 5px;
   margin-bottom: 30px;
   flex-direction: column;
   user-select: none;
@@ -142,6 +141,11 @@
   justify-content: flex-start;
   color: #212A3E;
   width: 310px;
+}
+
+.country-item:hover {
+  border-color: #193e8e;
+  color: #193e8e
 }
 
 .selected-country-item {
@@ -217,4 +221,35 @@
 .header-title {
   color: #212A3E;
   margin: 30px 0 0 0;
+}
+
+.small-title {
+  font-size: 13px;
+}
+
+.group-button {
+  padding: 5px;
+  border-radius: 7px;
+  border-color: #212A3E;
+  background-color: #F1F6F9;
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+}
+
+.group-button:hover {
+  padding: 5px;
+  border-radius: 7px;
+  border-color: #193e8e;
+  background-color: #193e8e;
+  color: #F1F6F9;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+}
+
+.line-middle {
+  color: #212A3E;
+  width: 100%;
+  margin-top: 20px;
 }
