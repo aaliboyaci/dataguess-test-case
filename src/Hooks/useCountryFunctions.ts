@@ -31,13 +31,11 @@ export function useCountryFunctions(data: Data | undefined) {
     }
   };
 
-  useEffect(() => {
-    selectLast(filteredCountries);
-  }, [filteredCountries]);
-
   const parseSearchQuery = (query: string) => {
-    const searchMatch = query.match(/search ([^"]+)/);
-    const groupMatch = query.match(/group ([^"]+)/);
+    query = query.trim();
+
+    const searchMatch = query.match(/^search\s+(.+)/);
+    const groupMatch = query.match(/^group\s+(.+)/);
 
     const search = searchMatch ? searchMatch[1] : "";
     const group = groupMatch ? groupMatch[1].toLowerCase() : "";
