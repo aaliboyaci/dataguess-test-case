@@ -3,14 +3,20 @@ import React from "react";
 interface GroupByButtonsProps {
   setGroup: (group: number) => void;
   setShowSelections: (show: boolean) => void;
+  setSearchTerm: (query: string) => void;
 }
 
-function GroupByButtons({ setGroup, setShowSelections }: GroupByButtonsProps) {
+function GroupByButtons({
+  setGroup,
+  setShowSelections,
+  setSearchTerm,
+}: GroupByButtonsProps) {
   return (
     <div className="top-buttons">
       <button
         className="group-button"
         onClick={() => {
+          setSearchTerm("");
           setGroup(0);
           setShowSelections(false);
         }}
@@ -21,6 +27,7 @@ function GroupByButtons({ setGroup, setShowSelections }: GroupByButtonsProps) {
       <button
         className="group-button"
         onClick={() => {
+          setSearchTerm("");
           setGroup(1);
           setShowSelections(false);
         }}
@@ -30,8 +37,9 @@ function GroupByButtons({ setGroup, setShowSelections }: GroupByButtonsProps) {
       <button
         className="group-button"
         onClick={() => {
-          setGroup(2);
           setShowSelections(false);
+          setSearchTerm("");
+          setGroup(2);
         }}
       >
         Currency
@@ -39,8 +47,9 @@ function GroupByButtons({ setGroup, setShowSelections }: GroupByButtonsProps) {
       <button
         className="group-button"
         onClick={() => {
-          setGroup(3);
           setShowSelections(false);
+          setSearchTerm("");
+          setGroup(3);
         }}
       >
         Continent

@@ -2,87 +2,34 @@ import { useQuery } from "@apollo/client";
 import { GET_COUNTRIES } from "./queries/getCountries";
 import "./components/Loading.css";
 import "./App.css";
-import React, { useEffect, useState } from "react";
 import { Country } from "./Types/CountryInterface";
 import GroupedCountry from "./group-by-components/GroupedCountry";
 import GroupByButtons from "./components/GroupByButtons";
 import SelectionButtons from "./components/SelectionButtons";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import SearchForm from "./components/SearchForm";
+import { useCountryFunctions } from "./Hooks/useCountryFunctions";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
-  const [latestSelectedCountry, setLatestSelectedCountry] =
-    useState<Country | null>(null);
-  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
-  const [showSelections, setShowSelections] = useState<boolean>(false);
-  const [group, setGroup] = useState<number>(0);
-
-  useEffect(() => {
-    if (data && data.countries && data.countries.length >= 10) {
-      setSelectedCountries([data.countries[9]]);
-      setLatestSelectedCountry(data.countries[9]);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (filteredCountries.length !== 0 && searchTerm !== "") {
-      const newCountry = filteredCountries[filteredCountries.length - 1];
-      if (!selectedCountries.some((c) => c.code === newCountry.code)) {
-        setSelectedCountries([...selectedCountries, newCountry]);
-        setLatestSelectedCountry(newCountry);
-      }
-    }
-  }, [filteredCountries]);
-
-  useEffect(() => {
-    if (data && data.countries && searchTerm !== "") {
-      const filtered = data.countries.filter((country: Country) =>
-        country.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCountries(filtered);
-    }
-  }, [data, searchTerm]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setShowSelections(false);
-    setGroup(0);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
-  const handleCountryClick = (country: Country) => {
-    if (selectedCountries.some((c) => c === country)) {
-      if (latestSelectedCountry === country) {
-        selectedCountries.length === 1
-          ? setLatestSelectedCountry(null)
-          : setLatestSelectedCountry(
-              selectedCountries[selectedCountries.length - 2]
-            );
-      }
-      setSelectedCountries(selectedCountries.filter((c) => c !== country));
-    } else {
-      setSelectedCountries([...selectedCountries, country]);
-      setLatestSelectedCountry(country);
-    }
-  };
-
-  const getCountryStyle = (country: Country) => {
-    if (
-      selectedCountries.some((c) => c === country) &&
-      latestSelectedCountry !== country
-    ) {
-      return "selected-country-item";
-    } else if (latestSelectedCountry === country) {
-      return "latest-selected-country-item";
-    } else {
-      return "country-item";
-    }
-  };
+  const {
+    selectedCountries,
+    latestSelectedCountry,
+    filteredCountries,
+    group,
+    setGroup,
+    handleCountryClick,
+    handleSearch,
+    handleSubmit,
+    handleInputChange,
+    searchTerm,
+    setShowSelections,
+    setSearchTerm,
+    setLatestSelectedCountry,
+    setSelectedCountries,
+    getCountryStyle,
+    showSelections,
+  } = useCountryFunctions(data);
 
   if (loading)
     return (
@@ -98,20 +45,19 @@ function App() {
     <div className="app-container">
       <h1 className="header-title">Dataguess</h1>
       <h3 className="header-title">Jr Frontend Developer Assignment</h3>
+
       <div className="text-filter">
-        <form className="search-form" onSubmit={handleSubmit}>
-          <input
-            className="search-input"
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-            placeholder="Search for a country"
-          />
-        </form>
+        <hr className="line-middle"></hr>
+        <SearchForm
+          searchTerm={searchTerm}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
         <p className="small-title">Group By</p>
         <GroupByButtons
           setGroup={setGroup}
           setShowSelections={setShowSelections}
+          setSearchTerm={setSearchTerm}
         />
         <hr className="line-middle"></hr>
       </div>
@@ -140,6 +86,8 @@ function App() {
           handleCountryClick={handleCountryClick}
           getCountryStyle={getCountryStyle}
           showSelections={showSelections}
+          setLatestSelectedCountry={setLatestSelectedCountry}
+          setSelectedCountries={setSelectedCountries}
         />
       </div>
       <ScrollToTopButton />

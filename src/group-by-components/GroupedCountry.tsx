@@ -15,6 +15,8 @@ interface GroupedCountryProps {
   handleCountryClick: (country: Country) => void;
   getCountryStyle: (country: Country) => string;
   showSelections: boolean;
+  setSelectedCountries: (country: Country[]) => void;
+  setLatestSelectedCountry: (country: Country | null) => void;
 }
 
 function renderCountryList(
@@ -34,13 +36,19 @@ function renderCountryList(
 function renderLanguageGroup(
   countries: Country[],
   handleCountryClick: (country: Country) => void,
-  getCountryStyle: (country: Country) => string
+  getCountryStyle: (country: Country) => string,
+  setSelectedCountries: (country: Country[]) => void,
+  setLatestSelectedCountry: (country: Country | null) => void,
+  selectedCountries: Country[]
 ) {
   return (
     <LanguageGroup
       countries={countries}
       handleCountryClick={handleCountryClick}
       getCountryStyle={getCountryStyle}
+      setSelectedCountries={setSelectedCountries}
+      setLatestSelectedCountry={setLatestSelectedCountry}
+      selectedCountries={selectedCountries}
     />
   );
 }
@@ -58,16 +66,23 @@ function renderSelectedCountryList(
     />
   );
 }
+
 function renderCurrencyGroup(
   countries: Country[],
   handleCountryClick: (country: Country) => void,
-  getCountryStyle: (country: Country) => string
+  getCountryStyle: (country: Country) => string,
+  setSelectedCountries: (country: Country[]) => void,
+  setLatestSelectedCountry: (country: Country | null) => void,
+  selectedCountries: Country[]
 ) {
   return (
     <CurrencyGroup
       countries={countries}
       handleCountryClick={handleCountryClick}
       getCountryStyle={getCountryStyle}
+      setSelectedCountries={setSelectedCountries}
+      setLatestSelectedCountry={setLatestSelectedCountry}
+      selectedCountries={selectedCountries}
     />
   );
 }
@@ -75,13 +90,19 @@ function renderCurrencyGroup(
 function renderContinentGroup(
   countries: Country[],
   handleCountryClick: (country: Country) => void,
-  getCountryStyle: (country: Country) => string
+  getCountryStyle: (country: Country) => string,
+  setSelectedCountries: (country: Country[]) => void,
+  setLatestSelectedCountry: (country: Country | null) => void,
+  selectedCountries: Country[]
 ) {
   return (
     <ContinentGroup
       countries={countries}
       handleCountryClick={handleCountryClick}
       getCountryStyle={getCountryStyle}
+      setSelectedCountries={setSelectedCountries}
+      setLatestSelectedCountry={setLatestSelectedCountry}
+      selectedCountries={selectedCountries}
     />
   );
 }
@@ -95,6 +116,8 @@ function GroupedCountry({
   showSelections,
   handleCountryClick,
   getCountryStyle,
+  setSelectedCountries,
+  setLatestSelectedCountry,
 }: GroupedCountryProps) {
   let content;
 
@@ -113,21 +136,30 @@ function GroupedCountry({
       content = renderLanguageGroup(
         countries,
         handleCountryClick,
-        getCountryStyle
+        getCountryStyle,
+        setSelectedCountries,
+        setLatestSelectedCountry,
+        selectedCountries
       );
       break;
     case 2:
       content = renderCurrencyGroup(
         countries,
         handleCountryClick,
-        getCountryStyle
+        getCountryStyle,
+        setSelectedCountries,
+        setLatestSelectedCountry,
+        selectedCountries
       );
       break;
     case 3:
       content = renderContinentGroup(
         countries,
         handleCountryClick,
-        getCountryStyle
+        getCountryStyle,
+        setSelectedCountries,
+        setLatestSelectedCountry,
+        selectedCountries
       );
       break;
     case 4:

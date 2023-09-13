@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Country } from "../Types/CountryInterface";
 
 interface LanguageGroupProps {
   countries: Country[];
   handleCountryClick: (country: Country) => void;
   getCountryStyle: (country: Country) => string;
+  setSelectedCountries: (country: Country[]) => void;
+  setLatestSelectedCountry: (country: Country | null) => void;
+  selectedCountries: Country[];
 }
 
 function LanguageGroup({
   countries,
   handleCountryClick,
   getCountryStyle,
+  setSelectedCountries,
+  setLatestSelectedCountry,
+  selectedCountries,
 }: LanguageGroupProps) {
   const languageGroups: { [key: string]: Country[] } = {};
 
@@ -25,6 +31,13 @@ function LanguageGroup({
       });
     }
   });
+  useEffect(() => {
+    const newCountry = languageGroups?.Arabic[7];
+    if (!selectedCountries.some((c) => c.code === newCountry.code)) {
+      setSelectedCountries([...selectedCountries, newCountry]);
+      setLatestSelectedCountry(newCountry);
+    }
+  }, []);
 
   return (
     <div className="country-list">
