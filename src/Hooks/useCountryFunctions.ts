@@ -32,6 +32,7 @@ export function useCountryFunctions(data: Data | undefined) {
   };
 
   const parseSearchQuery = (query: string) => {
+    query = query.toLowerCase();
     query = query.trim();
 
     const searchMatch = query.match(/^search\s+(.+)/);
