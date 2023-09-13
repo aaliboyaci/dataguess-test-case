@@ -12,14 +12,38 @@
   margin-top: 5px;
 }
 
+.search-form {
+  margin-top: 10px;
+}
+
 .search-input {
-  width: 300px;
+  width: 245px;
   padding: 13px;
   border-radius: 7px;
   border-style: solid;
   border-color: #212A3E;
   border-width: 1px;
   background-color: #fcfeff;
+}
+
+.search-button {
+  padding: 10px 5px 10px 5px;
+  margin-left: 10px;
+  border-style: none;
+  border-radius: 7px;
+  background-color: #212A3E;
+  color: #F1F6F9;
+}
+
+.search-button:hover {
+  background-color: #193e8e;
+  cursor: pointer;
+}
+
+.input-description {
+  color: #bbbbbb;
+  font-style: italic;
+  font-size: 12px;
 }
 
 .top-buttons {

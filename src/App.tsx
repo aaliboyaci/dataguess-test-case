@@ -8,6 +8,7 @@ import GroupedCountry from "./group-by-components/GroupedCountry";
 import GroupByButtons from "./components/GroupByButtons";
 import SelectionButtons from "./components/SelectionButtons";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import SearchForm from "./components/SearchForm";
 
 function App() {
   const { loading, error, data } = useQuery(GET_COUNTRIES);
@@ -26,7 +27,7 @@ function App() {
     }
   }, [data]);
 
-  useEffect(() => {
+  const selectLast = (filteredCountries: Country[]) => {
     if (filteredCountries.length !== 0 && searchTerm !== "") {
       const newCountry = filteredCountries[filteredCountries.length - 1];
       if (!selectedCountries.some((c) => c.code === newCountry.code)) {
@@ -34,25 +35,55 @@ function App() {
         setLatestSelectedCountry(newCountry);
       }
     }
-  }, [filteredCountries]);
+  };
 
   useEffect(() => {
-    if (data && data.countries && searchTerm !== "") {
-      const filtered = data.countries.filter((country: Country) =>
-        country.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCountries(filtered);
+    selectLast(filteredCountries);
+  }, [filteredCountries]);
+
+  const parseSearchQuery = (query: string) => {
+    const searchMatch = query.match(/search ([^"]+)/);
+    const groupMatch = query.match(/group ([^"]+)/);
+
+    const search = searchMatch ? searchMatch[1] : "";
+    const group = groupMatch ? groupMatch[1].toLowerCase() : "";
+
+    return { search, group };
+  };
+
+  const handleSearch = (query: string) => {
+    const { search, group } = parseSearchQuery(query);
+
+    switch (group) {
+      case "language":
+        setGroup(1);
+        break;
+      case "currency":
+        setGroup(2);
+        break;
+      case "continent":
+        setGroup(3);
+        break;
+      default:
+        setGroup(0);
     }
-  }, [data, searchTerm]);
+
+    const filtered = data.countries.filter((country: Country) =>
+      country.name.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredCountries(filtered);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch(searchTerm);
+    selectLast(filteredCountries);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setShowSelections(false);
     setGroup(0);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
   };
 
   const handleCountryClick = (country: Country) => {
@@ -98,20 +129,19 @@ function App() {
     <div className="app-container">
       <h1 className="header-title">Dataguess</h1>
       <h3 className="header-title">Jr Frontend Developer Assignment</h3>
+
       <div className="text-filter">
-        <form className="search-form" onSubmit={handleSubmit}>
-          <input
-            className="search-input"
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-            placeholder="Search for a country"
-          />
-        </form>
+        <hr className="line-middle"></hr>
+        <SearchForm
+          searchTerm={searchTerm}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
         <p className="small-title">Group By</p>
         <GroupByButtons
           setGroup={setGroup}
           setShowSelections={setShowSelections}
+          setSearchTerm={setSearchTerm}
         />
         <hr className="line-middle"></hr>
       </div>
