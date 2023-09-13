@@ -4,11 +4,19 @@ _GraphQL API Integration and Data Filtering_
 
 ## Introduction
 
-This documentation provides an overview of the project "dataguess-test-case," which involved developing a web application with GraphQL API integration and data filtering capabilities. This project was completed as part of a given assignment.
+This documentation provides an overview of the project "dataguess-test-case," which involved developing a web application with GraphQL Countries API integration and data filtering capabilities. This project was completed as part of a given assignment.
 
 ## Project Details
 
 **Project Name**: dataguess-test-case **Project Version**: 0.1.0
+
+## Live Demo
+
+You can test the live demo here.
+
+<a href="https://dataguess-test-case.vercel.app/" target="_blank">LIVE DEMO LINK</a>
+
+`https://dataguess-test-case.vercel.app/`
 
 ## Dependencies
 
@@ -37,11 +45,19 @@ The project utilized the Apollo Client and GraphQL to fetch data from the [Count
 
 ### 2. Displaying Data in a List
 
-The retrieved data was displayed in a list format, with each item representing the country and its own infos.
+The retrieved data was displayed in a list format, with each item representing the country and its own infos. Grouping by currency, language, continent.
 
 ### 3. Implementing a Text Filter
 
 A text filter was added above the list, enabling users to search and group results based on user-defined criteria.
+
+- example queries:
+- search ger
+- search braz
+- search tur
+- group continent
+- group language
+- group currency
 
 ### 4. Selectable Items
 
@@ -61,6 +77,26 @@ After loading items and applying group filters, the project automatically select
 ## Assumptions and Notes
 
 - In cases where certain query fields were missing or non-functional in the provided API, these queries and filtering operations were implemented on the client-side.
+
+- In the provided GraphQL API, the necessary fields for GraphQL queries and filtering were not available. Despite attempts to inquire about these requirements during the project, no responses were received. Consequently, the following assumptions were made, and the project proceeded based on these assumptions:
+
+- The API lacked the necessary GraphQL query fields and filters required for the project. Although attempts were made to seek clarification from the relevant teams, no responses were received. As a result, client-side filtering and query operations were implemented using array methods.
+  The project assumed that, under normal circumstances, these filtering operations and GraphQL queries would be performed server-side. However, due to the unavailability of this functionality in the provided API, client-side filtering was employed.
+
+- These assumptions were necessary to progress with the project, as the assignment instructions and filter requests were not explicitly clear or well-documented.
+
+### This project successfully delivers the following functionalities:
+
+- Grouping 250 countries into categories.
+- Searching for countries using the "xxx" query.
+- Selecting and displaying countries.
+- Clearing selections.
+- All project requirements have been met, including:
+
+- Selecting and deselecting items by clicking on them (with only one item selectable at a time).
+- Implementing a distinct background color for selected items.
+- Automatically selecting the 10th item or the last item if there are fewer than 10, considering potential performance issues with long lists.
+- These functionalities have been implemented successfully based on the assumptions made during the project.
 
 ## Conclusion
 
