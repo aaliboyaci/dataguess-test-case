@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Country } from "../Types/CountryInterface";
 
 interface CurrencyGroupProps {
   countries: Country[];
   handleCountryClick: (country: Country) => void;
   getCountryStyle: (country: Country) => string;
+  setSelectedCountries: (country: Country[]) => void;
+  setLatestSelectedCountry: (country: Country | null) => void;
+  selectedCountries: Country[];
 }
 
 function CurrencyGroup({
   countries,
   handleCountryClick,
   getCountryStyle,
+  setLatestSelectedCountry,
+  setSelectedCountries,
+  selectedCountries,
 }: CurrencyGroupProps) {
   const currencyGroups: { [key: string]: Country[] } = {};
 
@@ -23,6 +29,13 @@ function CurrencyGroup({
       currencyGroups[currencyName].push(country);
     }
   });
+  useEffect(() => {
+    const newCountry = currencyGroups?.EUR[9];
+    if (!selectedCountries.some((c) => c.code === newCountry.code)) {
+      setSelectedCountries([...selectedCountries, newCountry]);
+      setLatestSelectedCountry(newCountry);
+    }
+  }, []);
 
   return (
     <div className="country-list">
