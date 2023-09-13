@@ -18,7 +18,7 @@ function SearchForm({
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
-        placeholder="eg. search tt ,  group continent"
+        placeholder="eg. search bra ,  group continent"
       />
       <button className="search-button" type="submit">
         Search
